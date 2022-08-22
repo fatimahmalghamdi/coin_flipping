@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState , useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
 
@@ -37,9 +38,21 @@ function App() {
 const [pokemon, setPokemon] = useState([])
 const [isLoading, setIsLoading] = useState(false)
 
+// const handleClick = () => {
+//   setIsLoading(true);
+//   fetch(" https://pokeapi.co/api/v2/pokemon")
+//       .then(response => response.json())
+//       .then(pokemonData => {
+//         setPokemon(pokemonData.results)
+//         setIsLoading(false)
+//     } )
+// }
+
+
+
 const handleClick = () => {
   setIsLoading(true);
-  fetch(" https://pokeapi.co/api/v2/pokemon")
+  axios.get(" https://pokeapi.co/api/v2/pokemon")
       .then(response => response.json())
       .then(pokemonData => {
         setPokemon(pokemonData.results)
@@ -48,11 +61,15 @@ const handleClick = () => {
 }
 
 
+
+
   return (
     <div className="App">
       <button onClick= { handleClick }>fetch Pokemon</button>
       <div>
-            {isLoading ? "Loading..." : pokemon.map((poke, i) => <p key={i}> {poke.name} </p> )}  
+        <ul>
+            {isLoading ? "Loading..." : pokemon.map((poke, i) => <li key={i}> {poke.name} </li> )}  
+        </ul>
       </div>
     </div>
   );
